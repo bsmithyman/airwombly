@@ -4,7 +4,7 @@ import json
 
 @app.route('/')
 def root ():
-    return redirect(url_for('index')
+    return redirect(url_for('index'))
 
 @app.route('/index')
 def index ():
