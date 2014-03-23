@@ -12,7 +12,7 @@ def root ():
     <body>
     {}
     </body>
-    </html>'''.format(tuple(['<a href="/post/{0}">{0}</a><br />'.format(tag) for tag in posts.keys()]))
+    </html>'''.format(''.join(['<a href="/post/{0}">{0}</a><br />'.format(tag) for tag in posts.keys()]))
     return resp
 
 @app.route('/webhook', methods = ['POST'])
