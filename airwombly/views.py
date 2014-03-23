@@ -4,7 +4,16 @@ import json
 
 @app.route('/')
 def root ():
-    return 'Hello World'
+    br = backend.BlogRepo(gitconfig['LOCALREPO'], gitconfig['REMOTEREPO'])
+    posts = br.getPosts()
+
+    resp = '''
+    <html><head><title>Test</title></head>
+    <body>
+    {}
+    </body>
+    </html>'''.format(tuple(['<a href="/post/{0}">{0}</a><br />'.format(tag) for tag in posts.keys()]))
+    return resp
 
 @app.route('/webhook', methods = ['POST'])
 def webhook ():
