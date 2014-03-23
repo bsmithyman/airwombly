@@ -23,16 +23,22 @@ class BlogRepo:
         self.repo = repo
         self.origin = repo.remotes.origin
 
-    def getPosts (self):
+    def _getTree (self, treename):
 
-        if not hasattr(self, 'posts'):
+        if not hasattr(self, treename):
             for tree in self.repo.head.commit.tree.trees:
-                if tree.path == 'posts':
-                    self.posts = tree
-                break
+                if tree.path == treename:
+                    setattr(self, treename, tree)
+                    break
 
-        posts = {os.path.splitext(p.name)[0]: p.abspath for p in self.posts.blobs}
-        return posts
+        retval = {os.path.splitext(p.name)[0]: p.abspath for p in getattr(self, treename).blobs}
+        return retval
+
+    def getPosts (self):
+        return self._getTree('posts')
+
+    def getPages (self):
+        return self._getTree('pages')
 
 class Parser:
 

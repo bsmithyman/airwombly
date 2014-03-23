@@ -2,7 +2,7 @@
 {% block content %}
 <ul>
   {% for post in posts %}
-  <li><a href="/post/{{ post }}">{{ post }}</a></li>
+  <li><a href="{{ url_for('post', tag=post) }}">{{ post }}</a></li>
   {% endfor %}
 </ul>
 {% endblock %}
