@@ -4,16 +4,14 @@ import json
 
 @app.route('/')
 def root ():
-    br = backend.BlogRepo(gitconfig['LOCALREPO'], gitconfig['REMOTEREPO'])
-    posts = br.getPosts()
+    return redirect(url_for(index))
 
-    resp = '''
-    <html><head><title>Test</title></head>
-    <body>
-    {}
-    </body>
-    </html>'''.format(''.join(['<a href="/post/{0}">{0}</a><br />'.format(tag) for tag in posts.keys()]))
-    return resp
+@app.route('/index')
+def index ():
+    br = backend.BlogRepo(gitconfig['LOCALREPO'], gitconfig['REMOTEREPO'])
+    posts = br.getPosts().keys()
+
+    return render_template('index.html', posts = posts, br = br)
 
 @app.route('/webhook', methods = ['POST'])
 def webhook ():
@@ -34,11 +32,11 @@ def post (tag):
 
     if tag in posts:
         try:
-            metadata, html = p.parsefile(posts[tag])
+            metadata, content = p.parsefile(posts[tag])
         except:
-            pass
+            abort(404)
 
-        return html
+        return render_template('post.html', metadata = metadata, content = content, br = br)
 
     else:
         abort(404)
