@@ -8,16 +8,13 @@
 <body>
 {% block content %}{% endblock %}
 
-  {% with pages = br.getPages() %} 
-  {% if pages %}
 <div id="navigation">
   <ul>
-  {% for page in pages %}
-    <li><a href="{{ url_for('page', tag=page) }}">{{ page }}</a></li>
+    <a href="{{ url_for('root') }}"><li>index</li></a>
+  {% for page in br.getPages() %}
+    <a href="{{ url_for('page', tag=page) }}"><li>{{ page }}</li></a>
   {% endfor %}
   </ul>
-  {% endif %}
 </div>
-  {% endwith %}
 </body>
 </html>
