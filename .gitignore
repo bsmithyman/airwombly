@@ -54,3 +54,6 @@ docs/_build/
 
 # Testing virtualenv
 venv
+
+# MacVim swap files
+*.swp
