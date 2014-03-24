@@ -2,6 +2,7 @@ import os
 import git
 import yaml
 from misaka import Markdown, HtmlRenderer
+import gfm
 
 class CatastrophicGitlessness (Exception):
     pass
@@ -60,6 +61,7 @@ class Parser:
     
         rndr = HtmlRenderer()
         self.md = Markdown(rndr)
+        self.gfm = gfm.gfm
 
     def parsefile (self, filename):
         '''
@@ -95,7 +97,7 @@ class Parser:
             txtmd = ''.join(lines)
    
         metadata = yaml.load(txtyaml)
-        html = self.md.render(txtmd)
+        html = self.md.render(self.gfm(txtmd))
 
         return [metadata, html]
         
