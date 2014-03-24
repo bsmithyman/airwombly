@@ -44,6 +44,7 @@ class Parser:
 
     maxlen = 1024**2 # 1 MB
     yaml_delimiter = '---\n'
+    mdtypes = ['.md', '.txt']
 
     def __init__ (self):
     
@@ -59,7 +60,10 @@ class Parser:
         else:
             raise IOError('No such file or directory: \'{}\''.format(filename))
 
-        return self.parse(lines)
+        if os.path.splitext(filename)[1] in self.mdtypes:
+            return self.parse(lines)
+        else:
+            return {}, ''.join(lines)
 
     def parse (self, lines):
     
