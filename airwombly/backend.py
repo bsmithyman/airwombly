@@ -7,6 +7,10 @@ class CatastrophicGitlessness (Exception):
     pass
 
 class BlogRepo:
+    '''
+    Automatically caches remote Git repository locally. Handles blog/page
+    access from the repository.
+    '''
 
     def __init__ (self, local, remote):
         try:
@@ -24,6 +28,9 @@ class BlogRepo:
         self.origin = repo.remotes.origin
 
     def _getTree (self, treename):
+        '''
+        List files in named directory.
+        '''
 
         if not hasattr(self, treename):
             for tree in self.repo.head.commit.tree.trees:
@@ -52,6 +59,10 @@ class Parser:
         self.md = Markdown(rndr)
 
     def parsefile (self, filename):
+        '''
+        Return contents of file 'filename'. If the file extension identifies
+        it as a Markdown document, pass through the Markdown parser.
+        '''
 
         if os.path.isfile(filename):
             with open(filename, 'r') as fp:
@@ -66,6 +77,9 @@ class Parser:
             return {}, ''.join(lines)
 
     def parse (self, lines):
+        '''
+        Parse Markdown and YAML header.
+        '''
     
         if lines[0] == self.yaml_delimiter:
             for i, txt in enumerate(lines[1:]):

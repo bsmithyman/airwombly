@@ -3,10 +3,18 @@ from airwombly import app, backend, gitconfig
 import json
 
 def getBR ():
+    '''
+    Short function to get access to the repo. Prime target for caching (later).
+    '''
+
     return backend.BlogRepo(gitconfig['LOCALREPO'], gitconfig['REMOTEREPO'])
 
 @app.route('/', methods = ['GET'])
 def root ():
+    '''
+    Handle the site index. Preload post listing for convenience.
+    '''
+
     br = getBR()
     posts = br.getPosts().keys()
 
@@ -14,7 +22,14 @@ def root ():
 
 @app.route('/', methods = ['POST'])
 def webhook ():
+    '''
+    Handle POST requests to the site index. This acts as the target for the
+    webhook on a Git repository (could be GitHub, another Git server, or even
+    a server-side hook on a bare repo.
+    '''
+
     try:
+        # We don't really do anything with this data for now
         data = json.loads(request.data)
     except:
         pass
@@ -25,6 +40,11 @@ def webhook ():
 
 @app.route('/<tag>')
 def page (tag):
+    '''
+    Handles rendering of pages in the site root; pulls from Git backing.
+    Converts from Markdown if appropriate.
+    '''
+
     br = getBR()
     p = backend.Parser()
     pages = br.getPages()
@@ -42,6 +62,11 @@ def page (tag):
 
 @app.route('/posts/<tag>')
 def post (tag):
+    '''
+    Handles rendering of posts in the site root; pulls from Git backing.
+    Converts from Markdown if appropriate.
+    '''
+
     br = getBR()
     p = backend.Parser()
     posts = br.getPosts()
