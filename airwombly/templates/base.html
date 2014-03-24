@@ -4,9 +4,9 @@
   {% block title %}
   <title>airwombly</title>
   {% endblock %}
+  <link href="/static/base.css" rel="stylesheet" />
 </head>
 <body>
-{% block content %}{% endblock %}
 
 <div id="navigation">
   <ul>
@@ -16,5 +16,10 @@
   {% endfor %}
   </ul>
 </div>
+
+<div id="content">
+{% block content %}{% endblock %}
+</div>
+
 </body>
 </html>

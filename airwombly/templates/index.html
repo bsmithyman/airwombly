@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<ul>
-  {% for post in posts %}
-  <li><a href="{{ url_for('post', tag=post) }}">{{ post }}</a></li>
-  {% endfor %}
-</ul>
+<h1>Posts</h1>
+{% for post in posts %}
+<a href="{{ url_for('post', tag=post) }}">{{ post }}</a><br />
+{% endfor %}
 {% endblock %}
