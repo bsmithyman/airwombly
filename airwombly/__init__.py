@@ -1,19 +1,20 @@
 import os
 from flask import Flask
+from airwombly.backend import BlogRepo
 
 # Pull Git repository configuration from environment
 gitkeys = ['LOCALREPO', 'REMOTEREPO']
 gitconfig = {key: os.getenv(key) for key in gitkeys}
-subdir = lambda x: '{0}/{1}'.format(gitconfig['LOCALREPO'], x)
-
+br = BlogRepo(gitconfig[gitkeys[0]], gitconfig[gitkeys[1]])
+subdirs = br.getTrees()
 
 # Check to see if static or template directories exist in the Git repo.
 # If so, substitute those for the ones hard coded into the app.
 kwargs = {}
-if os.path.isdir(subdir('static')):
-    kwargs['static_folder'] = subdir('static')
-if os.path.isdir(subdir('templates')):
-    kwargs['template_folder'] = subdir('templates')
+if 'static' in subdirs:
+    kwargs['static_folder'] = subdirs['static']
+if 'templates' in subdirs:
+    kwargs['template_folder'] = subdirs['templates']
 
 app = Flask(__name__, **kwargs)
 

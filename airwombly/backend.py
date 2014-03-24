@@ -47,6 +47,9 @@ class BlogRepo:
     def getPages (self):
         return self._getTree('pages')
 
+    def getTrees (self):
+        return {tree.path: tree.abspath for tree in self.repo.head.commit.tree.trees}
+
 class Parser:
 
     maxlen = 1024**2 # 1 MB
