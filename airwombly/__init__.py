@@ -11,9 +11,9 @@ subdir = lambda x: '{0}/{1}'.format(gitconfig['LOCALREPO'], x)
 # If so, substitute those for the ones hard coded into the app.
 kwargs = {}
 if os.path.isdir(subdir('static')):
-    kwargs['static_folder'] = gitstatic
+    kwargs['static_folder'] = subdir('static')
 if os.path.isdir(subdir('templates')):
-    kwargs['template_folder'] = gittemplates
+    kwargs['template_folder'] = subdir('templates')
 
 app = Flask(__name__, **kwargs)
 
