@@ -5,6 +5,9 @@ from airwombly.backend import BlogRepo
 # Pull Git repository configuration from environment
 gitkeys = ['LOCALREPO', 'REMOTEREPO']
 gitconfig = {key: os.getenv(key) for key in gitkeys}
+if not gitconfig[gitkeys[0]]:
+    gitconfig[gitkeys[0]] = 'repo.git'
+
 br = BlogRepo(gitconfig[gitkeys[0]], gitconfig[gitkeys[1]])
 subdirs = br.getTrees()
 
