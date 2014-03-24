@@ -57,3 +57,6 @@ venv
 
 # MacVim swap files
 *.swp
+
+# Local Git repo copy
+repo.git

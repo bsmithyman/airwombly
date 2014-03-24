@@ -8,8 +8,10 @@ gitconfig = {key: os.getenv(key) for key in gitkeys}
 if not gitconfig[gitkeys[0]]:
     gitconfig[gitkeys[0]] = 'repo.git'
 
-br = BlogRepo(gitconfig[gitkeys[0]], gitconfig[gitkeys[1]])
-subdirs = br.getTrees()
+subdirs = {}
+if os.path.isdir(gitconfig[gitkeys[0]]):
+    br = BlogRepo(gitconfig[gitkeys[0]], gitconfig[gitkeys[1]])
+    subdirs.update(br.getTrees())
 
 # Check to see if static or template directories exist in the Git repo.
 # If so, substitute those for the ones hard coded into the app.
