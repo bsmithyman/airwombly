@@ -1,16 +1,17 @@
 from flask import render_template, redirect, session, url_for, request, g, abort
-from airwombly import app, backend, gitconfig
+from airwombly import app, backend, gitconfig, cache
 import json
 
 def getBR ():
     '''
-    Short function to get access to the repo. Prime target for caching (later).
+    Short function to get access to the repo.
     '''
 
     return backend.BlogRepo(gitconfig['LOCALREPO'], gitconfig['REMOTEREPO'])
 
 @app.route('/', methods = ['GET'])
-def root ():
+@cache.cached(300)
+def index ():
     '''
     Handle the site index. Preload post listing for convenience.
     '''
@@ -39,6 +40,7 @@ def webhook ():
     return str(br.repo.head.commit.hexsha)
 
 @app.route('/<tag>')
+@cache.cached(3600)
 def page (tag):
     '''
     Handles rendering of pages in the site root; pulls from Git backing.
@@ -61,6 +63,7 @@ def page (tag):
         abort(404)
 
 @app.route('/posts/<tag>')
+@cache.cached(3600)
 def post (tag):
     '''
     Handles rendering of posts in the site root; pulls from Git backing.

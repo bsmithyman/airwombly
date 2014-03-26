@@ -3,3 +3,4 @@ GitPython==0.3.2.RC1
 gunicorn==18.0
 misaka==1.0.2
 PyYAML==3.10
+Flask-Heroku-Cacheify>=1.3

@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask.ext.cacheify import init_cacheify
 from airwombly.backend import BlogRepo
 
 # Pull Git repository configuration from environment
@@ -22,5 +23,6 @@ if 'templates' in subdirs:
     kwargs['template_folder'] = subdirs['templates']
 
 app = Flask(__name__, **kwargs)
+cache = init_cacheify(app)
 
 from airwombly import views
