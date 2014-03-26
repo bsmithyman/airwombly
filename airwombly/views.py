@@ -11,7 +11,7 @@ def getBR ():
 
 @app.route('/', methods = ['GET'])
 @cache.cached(300)
-def index ():
+def root ():
     '''
     Handle the site index. Preload post listing for convenience.
     '''
