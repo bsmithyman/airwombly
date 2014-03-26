@@ -37,6 +37,7 @@ def webhook ():
 
     br = getBR()
     br.origin.pull()
+    cache.clear()
     return str(br.repo.head.commit.hexsha)
 
 @app.route('/<tag>')
