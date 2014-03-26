@@ -10,10 +10,12 @@
 
 <div id="navigation">
   <ul>
+  {% cache 300 %}
     <a href="{{ url_for('root') }}"><li>index</li></a>
   {% for page in br.getPages() %}
     <a href="{{ url_for('page', tag=page) }}"><li>{{ page }}</li></a>
   {% endfor %}
+  {% endcache %}
   </ul>
 </div>
 
