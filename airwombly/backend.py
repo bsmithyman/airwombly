@@ -90,7 +90,7 @@ class Parser:
             for i, txt in enumerate(lines[1:]):
                 if txt == self.yaml_delimiter:
                     txtyaml = ''.join(lines[1:i+1])
-                    txtmd = ''.join(lines[i+3])
+                    txtmd = ''.join(lines[i+3:])
                     break
         else:
             txtyaml = ''
