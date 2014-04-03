@@ -62,4 +62,4 @@ venv
 repo.git
 
 # Environment
-.env
+#.env
