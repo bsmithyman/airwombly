@@ -1,8 +1,6 @@
 import os
 import git
 import yaml
-from misaka import Markdown, HtmlRenderer
-import gfm
 
 class CatastrophicGitlessness (Exception):
     pass
@@ -57,12 +55,6 @@ class Parser:
     yaml_delimiter = '---\n'
     mdtypes = ['.md', '.txt']
 
-    def __init__ (self):
-    
-        rndr = HtmlRenderer()
-        self.md = Markdown(rndr)
-        self.gfm = gfm.gfm
-
     def parsefile (self, filename):
         '''
         Return contents of file 'filename'. If the file extension identifies
@@ -97,7 +89,7 @@ class Parser:
             txtmd = ''.join(lines)
    
         metadata = yaml.load(txtyaml)
-        html = self.md.render(self.gfm(txtmd))
+        html = pypandoc.convert(txtmd, 'html', format='md')
 
         return [metadata, html]
         
